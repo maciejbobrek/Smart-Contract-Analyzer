@@ -3,8 +3,10 @@ from solcx import compile_standard, install_solc
 from dotenv import load_dotenv
 import json
 
+import antlr4
 
 install_solc("0.6.0")
+
 
 with open("./example_contracts/simple.sol", "r") as file:
     simple_storage_file = file.read()
