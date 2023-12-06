@@ -42,5 +42,5 @@ for subdir, dirs, files in os.walk(directory):
             file.close()
 
 for filepath in to_delete:
-    print("Deleted " + filepath + ": compilation errors")
+    print("Deleted " + filepath + "due to compilation errors")
     os.remove(filepath)
