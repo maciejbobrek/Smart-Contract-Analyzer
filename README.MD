@@ -6,7 +6,6 @@ https://github.com/maciejbobrek/Smart-Contract-Analyzer.git```
 Then in DiscreteSystemsBattle folder you have to run one of two commands:
 ```
 python main.py
-```
 
 ## About 
 
