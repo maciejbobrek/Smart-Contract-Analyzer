@@ -1,12 +1,14 @@
 from eth_utils import address
 from solcx import compile_standard, install_solc
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 import json
 from contract_parser import *
 import antlr4
 import os
 install_solc("0.6.0")
 
+if not os.path.exists(f"script_output"):
+    os.makedirs(f"script_output")
 
 shutil.rmtree("./script_output", ignore_errors=False)
 create_tree("./example_contracts/lock.sol")
