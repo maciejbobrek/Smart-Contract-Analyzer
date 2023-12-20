@@ -29,7 +29,6 @@ basic_mutations = {
 extra_mutations = {
     "shortcut-arithmetic": ["++", "--"]
 }
-
 def create_tree(path):
 
     file_name = path.split('/')[-1][:-4]
