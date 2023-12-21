@@ -1,3 +1,4 @@
+pragma solidity ^0.8.0;
 function protected(uint a, uint b) returns(uint){
     return (a + b) * (a + b);
 }

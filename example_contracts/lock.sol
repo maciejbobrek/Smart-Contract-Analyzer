@@ -1,5 +1,5 @@
 
-    pragma solidity ^0.6.0;
+    pragma solidity ^0.8.0;
 
     contract Lock {
         uint public unlockTime;
@@ -18,8 +18,6 @@
         }
 
         function withdraw(uint amount) public {
-            // Uncomment this line, and the import of "hardhat/console.sol", to print a log in your terminal
-            // console.log("Unlock time is %o and block timestamp is %o", unlockTime, block.timestamp);
             uint bal = balances[msg.sender];
             require(block.timestamp >= unlockTime, "You can't withdraw yet");
             require(amount > 0, "Nothing to withdraw");
