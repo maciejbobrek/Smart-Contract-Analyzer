@@ -2,6 +2,7 @@
 import os
 import shutil
 import glob
+from solcx import compile_standard
 
 def read_contract(contract_path):
     with open(contract_path, 'r') as f:
@@ -101,4 +102,38 @@ def create_mutant_file(key, file_name, new_contract):
 
     with open(f"script_output/{key}/{file_name}{dir_size}.sol", "w") as output_file:
         output_file.write(new_contract)
-         
+
+def delete_mutants(directory):
+    all_files=0
+    for subdir, dirs, files in os.walk(directory):
+        to_delete=[]
+        for file in files:
+            all_files+=1
+            filepath = subdir + os.sep + file
+            if filepath.endswith(".sol"):
+                with open(filepath,"r") as file:
+                    simple_storage_file = file.read()
+            try:
+                compiled_sol = compile_standard(
+                    {
+                        "language": "Solidity",
+                        "sources": {"contract.sol": {"content": simple_storage_file}},
+                        "settings": {
+                            "outputSelection": {
+                                "*": {
+                                    "*": ["abi", "metadata", "evm.bytecode", "evm.bytecode.sourceMap"]
+                                }
+                            }
+                        },
+                    },
+                    solc_version="0.8.0",
+                )
+                file.close()
+            except:
+                to_delete.append(filepath)
+                file.close()
+    mutants=all_files-len(to_delete)
+    for file in to_delete:
+        os.remove(file)
+        print("DELETED"+  file + "DUE TO COMPILATION ERRORS")   
+    return mutants
