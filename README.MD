@@ -4,7 +4,9 @@ In order to launch our software
 ```
 https://github.com/maciejbobrek/Smart-Contract-Analyzer.git
 ```
+```
 python main.py
+```
 
 ## About 
 
