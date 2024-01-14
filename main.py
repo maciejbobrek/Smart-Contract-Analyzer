@@ -1,13 +1,8 @@
-from eth_utils import address
-from solcx import compile_standard, install_solc
-# from dotenv import load_dotenv
-import json
+from solcx import install_solc
 from contract_parser import *
 from slither_testing import slither_test
 from echidna_testing import echidna_test
-import antlr4
 import os
-import subprocess
 import time
 
 shutil.rmtree("./script_output", ignore_errors=False)
