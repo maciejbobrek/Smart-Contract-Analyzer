@@ -4,18 +4,18 @@ from solcx import compile_standard, install_solc
 import json
 from contract_parser import *
 from slither_testing import slither_test
+from echidna_testing import echidna_test
 import antlr4
 import os
 import subprocess
 import time
 
 shutil.rmtree("./script_output", ignore_errors=False)
-path_to_contract="./example_contracts/simple.sol"
+path_to_contract="./example_contracts/slither_long.sol"
 time.sleep(3)
 create_tree(path_to_contract)
 
-
-warning_num,eror_num,calls_num,original_len=slither_test(path_to_contract)
+warning_num,eror_num,calls_num,length=slither_test(path_to_contract)
 
 install_solc("0.8.0")
 
@@ -30,6 +30,20 @@ print("THERE ARE " + str(mutants) + " MUTANTS LEFT")
 time.sleep(2)
 
 killed=0
+
+#ECHIDNA TESTS
+# for subdir, dirs, files in os.walk(directory):
+#     for file in files:
+#         filepath = subdir + os.sep + file
+#         if filepath.endswith(".sol"):
+#             print("TESTING :"+ filepath)
+#             length=echidna_test(filepath)
+#             if length-og_len>10:
+#                 print("KILLED: ")
+#                 killed+=1
+#             else:
+#                 print("PASSED")
+#SLITHER TESTING
 for subdir, dirs, files in os.walk(directory):
     for file in files:
         filepath = subdir + os.sep + file
