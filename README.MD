@@ -7,6 +7,9 @@ https://github.com/maciejbobrek/Smart-Contract-Analyzer.git
 ```
 python main.py
 ```
+## Requirements
+- [echidna](https://github.com/crytic/echidna)
+- [slither](https://github.com/crytic/slither)
 
 ## About 
 
