@@ -5,10 +5,14 @@ from echidna_testing import echidna_test
 import os
 import time
 
-shutil.rmtree("./script_output", ignore_errors=False)
-path_to_contract="./example_contracts/slither_long.sol"
+# if os.path.exists("script_output"):
+#     shutil.rmtree("./script_output", ignore_errors=False)
+
+path_to_contract="./example_contracts/lock.sol"
 time.sleep(3)
-create_tree(path_to_contract)
+
+parser = ContractParser()
+parser.create_tree(path_to_contract)
 
 warning_num,eror_num,calls_num,length=slither_test(path_to_contract)
 
@@ -19,14 +23,14 @@ if not os.path.exists(f"script_output"):
 
 directory = "./script_output"
 
-
-mutants=delete_mutants(directory)
+# mutants = delete_mutants(directory)
+mutants = parser.delete_mutants(directory)
 print("THERE ARE " + str(mutants) + " MUTANTS LEFT")
 time.sleep(2)
 
 killed=0
 
-#ECHIDNA TESTS
+# ECHIDNA TESTS
 # for subdir, dirs, files in os.walk(directory):
 #     for file in files:
 #         filepath = subdir + os.sep + file
@@ -38,7 +42,8 @@ killed=0
 #                 killed+=1
 #             else:
 #                 print("PASSED")
-#SLITHER TESTING
+# SLITHER TESTING
+
 for subdir, dirs, files in os.walk(directory):
     for file in files:
         filepath = subdir + os.sep + file
