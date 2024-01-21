@@ -3,7 +3,7 @@ import subprocess
 
 
 def slither_test(filepath):
-   result = subprocess.run(['slither',filepath], 
+   result = subprocess.run(['slither', filepath], 
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE)
    output=result.stderr.decode()

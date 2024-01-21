@@ -23,10 +23,11 @@ def main():
     extra_mutations = {
     "shortcut-arithmetic": ["++", "--"]
     }
+    remove_line_mutations = ['delete', 'require']
     global payable
     contract_path = ''
 
-    names = list(basic_mutations.keys()) + list(extra_mutations.keys()) + ['payable']
+    names = list(basic_mutations.keys()) + list(extra_mutations.keys()) + remove_line_mutations + ['payable']
 
     layout = [
         [
@@ -66,11 +67,16 @@ def main():
             for key in extra_mutations.keys():
                 if key not in names:
                     del new_extra_mutations[key]
-            
+
+            new_remove_line_mutations = remove_line_mutations.copy()
+            for value in remove_line_mutations:
+                if value not in names:
+                    new_remove_line_mutations.remove(value)
+
             if "payable" not in names:
                 payable = False
         
-            parser = ContractParser(new_basic_mutations, new_extra_mutations, payable)
+            parser = ContractParser(new_basic_mutations, new_extra_mutations, new_remove_line_mutations, payable)
             parser.create_tree(contract_path)
 
 

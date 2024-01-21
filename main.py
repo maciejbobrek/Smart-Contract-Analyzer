@@ -4,14 +4,34 @@ from slither_testing import slither_test
 from echidna_testing import echidna_test
 import os
 import time
+basic_mutations = {
+    "state": ["view", "pure"],
+    "visibility": ["internal", "external", "public", "private"],
+    "data-location": ["storage", "memory"],
+    "int-types": ["int", "int8", "int32", "int64", "int128", "int256",
+                  "uint", "uint8", "uint32", "uint64", "uint128", "uint256"],
+    "math-functions": ["addmod", "mulmod"],
+    "address-variable": ["block.coinbase", "msg.sender", "tx.origin"],
+    "ether-units": ["wei", "finney", "szabo", "ether"],
+    "time-units": ["seconds", "minutes", "hours", "days", "weeks"],
+    "bin-arithmetic": ["+", "-", "*", "/", "%"],
+    "relational-operator": [">=", "<=", "==", "!=", ">", "<"],
+    "bin-condition": ["&&", "||", "&", "|"],
+    "shortcut-asignment": ["+=", "-=", "*=", "/=", "&="]
+}
+extra_mutations = {
+    "shortcut-arithmetic": ["++", "--"]
+}
+remove_line_mutations = ['delete', 'require']
+payable = True
 
 # if os.path.exists("script_output"):
 #     shutil.rmtree("./script_output", ignore_errors=False)
 
-path_to_contract="./example_contracts/lock.sol"
+path_to_contract="./example_contracts/basic.sol"
 time.sleep(3)
 
-parser = ContractParser()
+parser = ContractParser(basic_mutations, extra_mutations, remove_line_mutations, payable)
 parser.create_tree(path_to_contract)
 
 warning_num,eror_num,calls_num,length=slither_test(path_to_contract)
@@ -42,6 +62,7 @@ killed=0
 #                 killed+=1
 #             else:
 #                 print("PASSED")
+
 # SLITHER TESTING
 
 for subdir, dirs, files in os.walk(directory):
