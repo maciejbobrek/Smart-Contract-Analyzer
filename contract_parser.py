@@ -27,8 +27,13 @@ class ContractParser():
 
         lines = self.read_contract(path)
         for i, line in enumerate(lines):
+
+            if "//TESTS" in line:
+                break
+
             if line.strip().startswith("//"):
                 continue
+                
 
             line = line.split(' ')
             for key, ll in self.basic_mutations.items():
@@ -122,9 +127,6 @@ class ContractParser():
             os.makedirs(f"script_output/{key}")
 
         dir_size = len(os.listdir(f"script_output/{key}")) + 1
-
-        new_contract = new_contract[:new_contract.index("//TEST")] + '\n}'
-        print(new_contract)
 
         with open(f"script_output/{key}/{file_name}{dir_size}.sol", "w") as output_file:
             output_file.write(new_contract)
