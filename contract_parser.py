@@ -81,7 +81,6 @@ class ContractParser():
                         else:
                             variable_stripped = line[index][:line[index].find(value)]
                             mutants.append(value + variable_stripped)
-
                         mutants.append(variable_stripped + other_value)
                         mutants.append(other_value + variable_stripped)
                         self.create_mutans_based_on_list(lines, i, mutants, line[index], "shortcut-arithmetic", file_name)
@@ -123,6 +122,9 @@ class ContractParser():
             os.makedirs(f"script_output/{key}")
 
         dir_size = len(os.listdir(f"script_output/{key}")) + 1
+
+        new_contract = new_contract[:new_contract.index("//TEST")] + '\n}'
+        print(new_contract)
 
         with open(f"script_output/{key}/{file_name}{dir_size}.sol", "w") as output_file:
             output_file.write(new_contract)
