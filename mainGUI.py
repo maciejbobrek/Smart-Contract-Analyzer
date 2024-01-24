@@ -9,9 +9,8 @@ import time
 
 payable = False
 
-def logic(parser, path_to_contract):
+def logic(parser, path_to_contract, echidna):
     warning_num,eror_num,calls_num,length=slither_test(path_to_contract)
-
 
     if not os.path.exists(f"script_output"):
         os.makedirs(f"script_output")
@@ -26,17 +25,18 @@ def logic(parser, path_to_contract):
     killed=0
 
     # ECHIDNA TESTS
-    # for subdir, dirs, files in os.walk(directory):
-    #     for file in files:
-    #         filepath = subdir + os.sep + file
-    #         if filepath.endswith(".sol"):
-    #             print("TESTING :"+ filepath)
-    #             length=echidna_test(filepath)
-    #             if length-og_len>10:
-    #                 print("KILLED: ")
-    #                 killed+=1
-    #             else:
-    #                 print("PASSED")
+    if echidna:
+        for subdir, dirs, files in os.walk(directory):
+            for file in files:
+                filepath = subdir + os.sep + file
+                if filepath.endswith(".sol"):
+                    print("TESTING :"+ filepath)
+                    length=echidna_test(filepath)
+                    if length-og_len>10:
+                        print("KILLED: ")
+                        killed+=1
+                    else:
+                        print("PASSED")
 
     # SLITHER TESTING
 
@@ -89,6 +89,7 @@ def main():
             sg.FileBrowse() 
         ],
         [sg.Listbox(values=names, size=(30, 6), key='-LIST-', enable_events=True)],
+        [sg.Checkbox("Use Echidna", key='-ECHIDNA-')],
         [sg.Button('Remove Selected', key='-REMOVE-'), sg.Button('Submit', key='-SUBMIT-'), sg.Button('Exit')],
     ]
 
@@ -133,7 +134,7 @@ def main():
             parser = ContractParser(new_basic_mutations, new_extra_mutations, new_remove_line_mutations, payable)
             parser.create_tree(contract_path)
             window.close()
-            logic(parser, contract_path)
+            logic(parser, contract_path, values['-ECHIDNA-'])
 
             
     window.close()

@@ -11,7 +11,6 @@ class ContractParser():
         self.extra_mutations = extra_mutations
         self.remove_line_mutations = remove_line_mutations
         self.payable = payable
-        print(self.extra_mutations)
     
     def read_contract(self, contract_path):
         with open(contract_path, 'r') as f:
