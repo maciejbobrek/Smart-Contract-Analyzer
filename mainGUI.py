@@ -52,10 +52,11 @@ def main():
         if event == '-REMOVE-':
             selected_value = values['-LIST-'][0] if values['-LIST-'] else None
             selected_index = names.index(selected_value)
+            print(selected_index)
             if selected_index:
                 del names[selected_index]
                 window['-LIST-'].update(values=names)
-
+            
         if event == '-SUBMIT-':
 
             new_basic_mutations = basic_mutations.copy()

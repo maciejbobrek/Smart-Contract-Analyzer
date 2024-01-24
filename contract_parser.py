@@ -11,6 +11,7 @@ class ContractParser():
         self.extra_mutations = extra_mutations
         self.remove_line_mutations = remove_line_mutations
         self.payable = payable
+        print(self.extra_mutations)
     
     def read_contract(self, contract_path):
         with open(contract_path, 'r') as f:
@@ -49,6 +50,18 @@ class ContractParser():
                         for changer in list_without_found:
                             self.create_mutant_of_type(lines, i, value, changer, key, file_name)
             
+
+            for value in self.remove_line_mutations:
+                if any(value in word for word in line):
+                    whole_line = ' '.join(line)
+                    self.create_mutant_by_removing_line(lines, lines.index(whole_line), 'require_delete_comment', file_name)
+
+            if "payable" in line and self.payable:
+                self.create_mutant_of_type(lines, i, "payable", "", "payable", file_name)    
+            
+            if not self.extra_mutations:
+                continue
+
             for value in self.extra_mutations["shortcut-arithmetic"]:
 
                 if any(value in word for word in line):
@@ -73,14 +86,6 @@ class ContractParser():
                         mutants.append(variable_stripped + other_value)
                         mutants.append(other_value + variable_stripped)
                         self.create_mutans_based_on_list(lines, i, mutants, line[index], "shortcut-arithmetic", file_name)
-            
-            for value in self.remove_line_mutations:
-                if any(value in word for word in line):
-                    whole_line = ' '.join(line)
-                    self.create_mutant_by_removing_line(lines, lines.index(whole_line), 'require_delete_comment', file_name)
-
-            if "payable" in line and self.payable:
-                self.create_mutant_of_type(lines, i, "payable", "", "payable", file_name)    
     
     def create_mutant_by_removing_line(self, lines, line_id, key, file_name):
         lines_to_edit = lines.copy()
