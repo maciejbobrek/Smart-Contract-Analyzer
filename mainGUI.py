@@ -26,6 +26,7 @@ def logic(parser, path_to_contract, slither, echidna):
     og_len=echidna_test(path_to_contract)
     # ECHIDNA TESTS
     if echidna:
+        print("=========ECHIDNA TESTS===========")
         for subdir, dirs, files in os.walk(directory):
             for file in files:
                 filepath = subdir + os.sep + file
@@ -40,6 +41,7 @@ def logic(parser, path_to_contract, slither, echidna):
 
     # SLITHER TESTING
     if slither:
+        print("=========SLITHER TESTS===========")
         for subdir, dirs, files in os.walk(directory):
             for file in files:
                 filepath = subdir + os.sep + file
@@ -51,7 +53,8 @@ def logic(parser, path_to_contract, slither, echidna):
                         killed+=1
                     else:
                         print("PASSED")
-
+    if slither and echidna:
+        mutants=mutants*2
     print("MUTANTS SURVIVED:"+ str(mutants-killed))
     print("MUTANTS KILLED:"+ str(killed))
     print("MUTATION SCORE IS: " + str((killed/mutants )* 100)  + "%")
