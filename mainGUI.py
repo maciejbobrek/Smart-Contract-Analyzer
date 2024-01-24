@@ -89,7 +89,7 @@ def main():
             sg.FileBrowse() 
         ],
         [sg.Listbox(values=names, size=(30, 6), key='-LIST-', enable_events=True)],
-        [sg.Checkbox("Slither", key='-SLITHER-'), sg.Checkbox("Echidna", key='-ECHIDNA-')],
+        [sg.Checkbox("Slither", key='-SLITHER-', default=True), sg.Checkbox("Echidna", key='-ECHIDNA-')],
         [sg.Button('Remove Selected', key='-REMOVE-'), sg.Button('Submit', key='-SUBMIT-'), sg.Button('Exit')],
     ]
 
