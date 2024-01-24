@@ -9,7 +9,7 @@ import time
 
 payable = False
 
-def logic(parser, path_to_contract, echidna):
+def logic(parser, path_to_contract, slither, echidna):
     warning_num,eror_num,calls_num,length=slither_test(path_to_contract)
 
     if not os.path.exists(f"script_output"):
@@ -39,18 +39,18 @@ def logic(parser, path_to_contract, echidna):
                         print("PASSED")
 
     # SLITHER TESTING
-
-    for subdir, dirs, files in os.walk(directory):
-        for file in files:
-            filepath = subdir + os.sep + file
-            if filepath.endswith(".sol"):
-                print("TESTING :"+ filepath)
-                warning_mutant,error_mutant,calls_mutant,len_mutant=slither_test(filepath)
-                if abs(warning_num-warning_mutant)>0 or abs(eror_num-error_mutant)>0 or abs(calls_num-calls_mutant)>0:
-                    print("KILLED: " +str(abs(warning_num-warning_mutant)) + " WARNINGS FOUND, " +  str(abs(error_mutant - eror_num)) + " ERRORS FOUND, "+ str( abs(calls_mutant - calls_num)) + " CALLS FOUND" )
-                    killed+=1
-                else:
-                    print("PASSED")
+    if slither:
+        for subdir, dirs, files in os.walk(directory):
+            for file in files:
+                filepath = subdir + os.sep + file
+                if filepath.endswith(".sol"):
+                    print("TESTING :"+ filepath)
+                    warning_mutant,error_mutant,calls_mutant,len_mutant=slither_test(filepath)
+                    if abs(warning_num-warning_mutant)>0 or abs(eror_num-error_mutant)>0 or abs(calls_num-calls_mutant)>0:
+                        print("KILLED: " +str(abs(warning_num-warning_mutant)) + " WARNINGS FOUND, " +  str(abs(error_mutant - eror_num)) + " ERRORS FOUND, "+ str( abs(calls_mutant - calls_num)) + " CALLS FOUND" )
+                        killed+=1
+                    else:
+                        print("PASSED")
 
     print("MUTANTS SURVIVED:"+ str(mutants-killed))
     print("MUTANTS KILLED:"+ str(killed))
@@ -89,7 +89,7 @@ def main():
             sg.FileBrowse() 
         ],
         [sg.Listbox(values=names, size=(30, 6), key='-LIST-', enable_events=True)],
-        [sg.Checkbox("Use Echidna", key='-ECHIDNA-')],
+        [sg.Checkbox("Slither", key='-SLITHER-', default=True), sg.Checkbox("Echidna", key='-ECHIDNA-')],
         [sg.Button('Remove Selected', key='-REMOVE-'), sg.Button('Submit', key='-SUBMIT-'), sg.Button('Exit')],
     ]
 
@@ -134,9 +134,8 @@ def main():
             parser = ContractParser(new_basic_mutations, new_extra_mutations, new_remove_line_mutations, payable)
             parser.create_tree(contract_path)
             window.close()
-            logic(parser, contract_path, values['-ECHIDNA-'])
+            logic(parser, contract_path, values['-SLITHER-'], values['-ECHIDNA-'])
 
-            
     window.close()
 
 if __name__ == '__main__':
