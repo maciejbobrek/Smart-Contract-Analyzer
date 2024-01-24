@@ -23,7 +23,7 @@ def logic(parser, path_to_contract, echidna):
     time.sleep(2)
 
     killed=0
-
+    og_len=echidna_test(path_to_contract)
     # ECHIDNA TESTS
     if echidna:
         for subdir, dirs, files in os.walk(directory):
@@ -33,7 +33,7 @@ def logic(parser, path_to_contract, echidna):
                     print("TESTING :"+ filepath)
                     length=echidna_test(filepath)
                     if length-og_len>10:
-                        print("KILLED: ")
+                        print("KILLED")
                         killed+=1
                     else:
                         print("PASSED")

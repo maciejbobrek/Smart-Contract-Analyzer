@@ -8,6 +8,5 @@ def echidna_test(filepath):
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE)
    output=result.stderr.decode()
-   print(output)
    length=len(output)
    return length

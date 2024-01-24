@@ -8,7 +8,7 @@ contract Counter {
     function dec() external {
         count -= 1;
     }
-
+    //TESTS
     function echidna_test_true() public view returns (bool) {
         return true;
     }
