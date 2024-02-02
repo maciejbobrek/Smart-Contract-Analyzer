@@ -25,9 +25,24 @@ The project is in development state. For now it produces AST tree with basic ope
 
 - Mutation Testing result in %
 
-#### How Does it Work?
+##### GUI
 
 When you launch our software , a GUI opens where user can choose what mutation operators to use, and whether wants to use slither static testing or dynamic echidna tests from input.
 To use echidna you need to have one class, with test methos after '//TESTS' flag. Example of that contract is in example_contracts/echidna.sol.
 
 ![GUI](./resources/echidna.png "Simple GUI")
+
+
+##### Testing
+
+Then the testing is performed showing if contract passed or is killed and with how many errors
+
+![Testing](./resources/testing.png "tests")
+
+
+##### OutPut
+
+After all the tests user gets a mutation score, which indicates how immune the contract is for small mistakes - when used with slither.
+When used with echidna you can check the coverage of your tests and how well they do against mutations.
+
+![Output](./resources/testing.png "output")
