@@ -29,3 +29,5 @@ The project is in development state. For now it produces AST tree with basic ope
 
 When you launch our software , a GUI opens where user can choose what mutation operators to use, and whether wants to use slither static testing or dynamic echidna tests from input.
 To use echidna you need to have one class, with test methos after '//TESTS' flag. Example of that contract is in example_contracts/echidna.sol.
+
+![GUI](./resources/echidna.png "Simple GUI")
