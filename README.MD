@@ -45,4 +45,4 @@ Then the testing is performed showing if contract passed or is killed and with h
 After all the tests user gets a mutation score, which indicates how immune the contract is for small mistakes - when used with slither.
 When used with echidna you can check the coverage of your tests and how well they do against mutations.
 
-![Output](./resources/testing.png "output")
+![Output](./resources/output.png "output")
