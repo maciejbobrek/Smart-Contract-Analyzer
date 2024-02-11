@@ -10,6 +10,7 @@ import time
 payable = False
 
 def logic(parser, path_to_contract, slither, echidna):
+    
     warning_num,eror_num,calls_num,length=slither_test(path_to_contract)
 
     if not os.path.exists(f"script_output"):
@@ -17,15 +18,14 @@ def logic(parser, path_to_contract, slither, echidna):
 
     directory = "./script_output"
 
-    # mutants = delete_mutants(directory)
     mutants = parser.delete_mutants(directory)
     print("THERE ARE " + str(mutants) + " MUTANTS LEFT")
     time.sleep(2)
 
     killed=0
-    og_len=echidna_test(path_to_contract)
     # ECHIDNA TESTS
     if echidna:
+        og_len=echidna_test(path_to_contract)
         print("=========ECHIDNA TESTS===========")
         for subdir, dirs, files in os.walk(directory):
             for file in files:
@@ -57,7 +57,14 @@ def logic(parser, path_to_contract, slither, echidna):
         mutants=mutants*2
     print("MUTANTS SURVIVED:"+ str(mutants-killed))
     print("MUTANTS KILLED:"+ str(killed))
-    print("MUTATION SCORE IS: " + str((killed/mutants )* 100)  + "%")
+    if mutants == 0:
+        mutants = 1
+    mutation_score = str((killed/mutants)* 100)
+    
+    print("MUTATION SCORE IS: " + str((killed/mutants)* 100)  + "%")
+    # mutation_score = random.randint(0, 100)
+
+    return mutation_score
 
 def main():
 
@@ -69,7 +76,7 @@ def main():
                   "uint", "uint8", "uint32", "uint64", "uint128", "uint256"],
     "math-functions": ["addmod", "mulmod"],
     "address-variable": ["block.coinbase", "msg.sender", "tx.origin"],
-    "ether-units": ["wei", "finney", "szabo", "ehter"],
+    "ether-units": ["wei", "finney", "szabo", "ether"],
     "time-units": ["seconds", "minutes", "hours", "days", "weeks"],
     "bin-arithmetic": ["+", "-", "*", "/", "%"],
     "relational-operator": [">=", "<=", "==", "!=", ">", "<"],
@@ -144,6 +151,5 @@ def main():
 if __name__ == '__main__':
     main()
 
-install_solc("0.8.0")
 
 

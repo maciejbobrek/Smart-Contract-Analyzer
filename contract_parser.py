@@ -2,8 +2,7 @@
 import os
 import shutil
 import glob
-from solcx import compile_standard
-
+from solcx import compile_standard  
 class ContractParser():
 
     def __init__(self, basic_mutations, extra_mutations, remove_line_mutations, payable):
@@ -40,7 +39,7 @@ class ContractParser():
                 for value in ll:
                     
                     shouldMutate = False
-                    if key == 'int-types':
+                    if key == 'int-types' or key == 'bin-arithmetic':
                         if value in line:
                             shouldMutate = True
                     else:
@@ -163,7 +162,7 @@ class ContractParser():
         mutants=all_files-len(to_delete)
         for file in to_delete:
             os.remove(file)
-            print("DELETED"+  file + "DUE TO COMPILATION ERRORS")   
+            print("DELETED "+  file + " DUE TO COMPILATION ERRORS")   
         return mutants
 
 # def read_contract(contract_path):
