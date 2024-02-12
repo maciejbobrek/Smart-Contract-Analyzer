@@ -6,6 +6,7 @@ from slither_testing import slither_test
 from echidna_testing import echidna_test
 import os
 import time
+# import random
 
 payable = False
 
@@ -62,6 +63,7 @@ def logic(parser, path_to_contract, slither, echidna):
     mutation_score = str((killed/mutants)* 100)
     
     print("MUTATION SCORE IS: " + str((killed/mutants)* 100)  + "%")
+    
     # mutation_score = random.randint(0, 100)
 
     return mutation_score

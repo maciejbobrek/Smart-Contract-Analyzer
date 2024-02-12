@@ -69,6 +69,11 @@ def test_contract(path):
     parser_payable = ContractParser(new_basic_mutations, new_extra_mutations, new_remove_line_mutations, payable)
     score = logic(parser_payable, path, DO_SLITHER, DO_ECHIDNA)
     values['payable'] = score
+
+    #contract with all
+    parser_full = ContractParser(basic_mutations, extra_mutations, remove_line_mutations, payable)
+    score = logic(parser_full, path, DO_SLITHER, DO_ECHIDNA)
+    values['all_mutagens'] = score
     save_dict_to_file(values, path)
 
 def save_dict_to_file(values, file_name):
