@@ -22,7 +22,8 @@ class ContractParser():
         if os.path.exists("script_output"):
             shutil.rmtree("./script_output", ignore_errors=False)
 
-        file_name = path.split('/')[-1][:-4]
+        file_name = path.split('\\')[-1][:-4]
+        print(file_name)
 
         lines = self.read_contract(path)
         for i, line in enumerate(lines):
