@@ -88,9 +88,10 @@ def save_dict_to_file(values, file_name):
     new_file_name = file_name.split('\\')[1][:-4] + '.txt'
 
     with open(f'scores_script/{new_file_name}', 'w+') as f:
-        s = ''
+        s = 'operator, score, mutants, killed\n'
         for key, val in values.items():
-            s += f'{key}: {val}%\n'
+            # s += f'{key}: {val[0]}%, mutants: {val[1]}, killed: {val[2]}\n'
+            s += f'{key}, {val[0]}, {val[1]}, {val[2]}\n'
         f.write(s)
         
 

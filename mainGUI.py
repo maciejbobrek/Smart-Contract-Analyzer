@@ -1,3 +1,4 @@
+import random
 import PySimpleGUI as sg
 from contract_parser import *
 from solcx import install_solc
@@ -64,9 +65,10 @@ def logic(parser, path_to_contract, slither, echidna):
     
     print("MUTATION SCORE IS: " + str(mutation_score)  + "%")
     
+    # mutants, killed = 0, 0
     # mutation_score = random.randint(0, 100)
 
-    return mutation_score
+    return mutation_score, mutants, killed
 
 def main():
 

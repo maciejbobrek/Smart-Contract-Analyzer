@@ -23,7 +23,6 @@ class ContractParser():
             shutil.rmtree("./script_output", ignore_errors=True)
 
         file_name = path.split('\\')[-1][:-4]
-        print(file_name)
 
         lines = self.read_contract(path)
         for i, line in enumerate(lines):
