@@ -47,12 +47,14 @@ def test_contract(path):
         new_basic_mutations = dict()
         new_basic_mutations[key] = val
         parser_basic = ContractParser(new_basic_mutations, new_extra_mutations, new_remove_line_mutations, payable)
+        parser_basic.create_tree(path)
         score = logic(parser_basic, path, DO_SLITHER, DO_ECHIDNA)
         values[key] = score
     
     #extra mutations
     new_basic_mutations = dict()
     parser_extra = ContractParser(new_basic_mutations, extra_mutations, new_remove_line_mutations, payable)
+    parser_extra.create_tree(path)
     score = logic(parser_extra, path, DO_SLITHER, DO_ECHIDNA)
     values["shortcut-arithmetic"] = score
 
@@ -61,17 +63,20 @@ def test_contract(path):
         new_remove_line_mutations = []
         new_remove_line_mutations.append(val)
         parser_remove_line = ContractParser(new_basic_mutations, new_extra_mutations, new_remove_line_mutations, payable)
+        parser_remove_line.create_tree(path)
         score = logic(parser_remove_line, path, DO_SLITHER, DO_ECHIDNA)
         values[val] = score
 
     #payable
     payable = True
     parser_payable = ContractParser(new_basic_mutations, new_extra_mutations, new_remove_line_mutations, payable)
+    parser_payable.create_tree(path)
     score = logic(parser_payable, path, DO_SLITHER, DO_ECHIDNA)
     values['payable'] = score
 
     #contract with all
     parser_full = ContractParser(basic_mutations, extra_mutations, remove_line_mutations, payable)
+    parser_full.create_tree(path)
     score = logic(parser_full, path, DO_SLITHER, DO_ECHIDNA)
     values['all_mutagens'] = score
     save_dict_to_file(values, path)
