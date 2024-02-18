@@ -2,6 +2,7 @@
 import os
 import shutil
 import glob
+import time
 from solcx import compile_standard  
 class ContractParser():
 
@@ -18,9 +19,8 @@ class ContractParser():
             return lines
     
     def create_tree(self, path):
-        
         if os.path.exists("script_output"):
-            shutil.rmtree("./script_output", ignore_errors=False)
+            shutil.rmtree("./script_output", ignore_errors=True)
 
         file_name = path.split('\\')[-1][:-4]
         print(file_name)

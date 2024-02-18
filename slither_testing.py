@@ -6,7 +6,7 @@ def slither_test(filepath):
    result = subprocess.run(['slither', filepath], 
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE)
-   output=result.stderr.decode()
+   output=result.stderr.decode('cp1252')
    length=len(output)
    warning_number= output.count('warn')
    error_number=output.count('err')

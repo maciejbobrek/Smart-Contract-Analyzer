@@ -60,9 +60,9 @@ def logic(parser, path_to_contract, slither, echidna):
     print("MUTANTS KILLED:"+ str(killed))
     if mutants == 0:
         mutants = 1
-    mutation_score = str((killed/mutants)* 100)
+    mutation_score = (killed/mutants)* 100
     
-    print("MUTATION SCORE IS: " + str((killed/mutants)* 100)  + "%")
+    print("MUTATION SCORE IS: " + str(mutation_score)  + "%")
     
     # mutation_score = random.randint(0, 100)
 
